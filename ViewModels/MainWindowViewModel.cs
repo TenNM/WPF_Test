@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using WPF_Test.Infrastructure.Commands;
+using WPF_Test.Models;
 using WPF_Test.ViewModels.Base;
 
 namespace WPF_Test.ViewModels
@@ -24,17 +20,33 @@ namespace WPF_Test.ViewModels
         }
         #endregion
 
+        #region bitmap
+        private BitmapSource _bitmapSrc;
+        public BitmapSource BitmapSrc
+        {
+            get => _bitmapSrc;
+            set => Set(ref _bitmapSrc, value);
+        }
+        #endregion
+
+        #region img
+        NoizeImgGenerator _noizeImgGenerator;
+        public int ImgWidth { get => _noizeImgGenerator.Width; }
+        public int ImgHeight { get => _noizeImgGenerator.Height; } 
+        #endregion
+
         #region commands
-        
-        //public ICommand CloseAppCmd { get; }
-        //private bool CanCloseAppCmdExecute(object p) => true;
-        //private void OnCloseAppCmdExecuted(object p) => Application.Current.Shutdown();
+
+        public ICommand DrawPointCmd { get; }
+        private bool Can_DrawPointCmd_Execute(object p) => true;
+        private void On_DrawPointCmd_Executed(object p) => BitmapSrc = _noizeImgGenerator.GetNoizeBitmapSource();
 
         #endregion
 
         public MainWindowViewModel()
         {
-            //CloseAppCmd = new LambdaCommand(OnCloseAppCmdExecuted, CanCloseAppCmdExecute);
+            DrawPointCmd = new LambdaCommand(On_DrawPointCmd_Executed, Can_DrawPointCmd_Execute);
+            _noizeImgGenerator = new NoizeImgGenerator();
         }
     }
 }

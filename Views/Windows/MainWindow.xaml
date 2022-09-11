@@ -7,16 +7,21 @@
         xmlns:vm="clr-namespace:WPF_Test.ViewModels"
         xmlns:cmd="clr-namespace:WPF_Test.Infrastructure.Commands"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="450" Width="800">
+        Title="{Binding Title}" Height="400" Width="400" ResizeMode="CanMinimize">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Window.Resources>
         <cmd:CloseAppCmd x:Key="CloseAppCmd"/>
     </Window.Resources>
-    <Grid>
-        <TextBox HorizontalAlignment="Left" Margin="33,41,0,0" TextWrapping="Wrap" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Exit" HorizontalAlignment="Left" Margin="188,41,0,0" VerticalAlignment="Top" Command="{StaticResource CloseAppCmd}"/>
-
-    </Grid>
+    <Window.InputBindings>
+        <KeyBinding Key="D" Command="{Binding DrawPointCmd}" />
+    </Window.InputBindings>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" VerticalAlignment="Top">
+            <MenuItem Header="Exit" Command="{StaticResource CloseAppCmd}"></MenuItem>
+            <MenuItem Header="Draw" Command="{Binding DrawPointCmd}"></MenuItem>
+        </Menu>
+        <Image Source="{Binding BitmapSrc}" Width="{Binding ImgWidth}" Height="{Binding ImgHeight}" RenderOptions.BitmapScalingMode="HighQuality"></Image>
+    </DockPanel>
 </Window>
