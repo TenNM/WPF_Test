@@ -34,5 +34,26 @@ namespace WPF_Test.Models
             96, 96, _pf, null,
             _rawImage, _rawStride);
         }
+        internal BitmapSource GetBitmapSourceWithNewPixel()
+        {
+            SetPixel( r.Next(Width), r.Next(Height), Color.FromRgb(255, 255, 255) );
+
+            return BitmapSource.Create(Width, Height,
+            96, 96, _pf, null,
+            _rawImage, _rawStride);
+        }
+        internal void SetPixel(int x, int y, Color c)
+        {
+            if (x < 0) throw new ArgumentOutOfRangeException("x < 0");
+            if (x >= Width) throw new ArgumentOutOfRangeException("x > Width");
+            if (y < 0) throw new ArgumentOutOfRangeException("y < 0");
+            if (y >= Height) throw new ArgumentOutOfRangeException("y > Height");
+            if(_pf.BitsPerPixel != 24) throw new ArgumentOutOfRangeException("can't convert color");
+
+            int index = (x + (y * Width)) * 3;//3 byte per pixel
+            _rawImage[index] = c.R;
+            _rawImage[index+1] = c.G;
+            _rawImage[index+2] = c.B;
+        }
     }
 }

@@ -16,11 +16,14 @@
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="D" Command="{Binding DrawPointCmd}" />
+        <KeyBinding Key="R" Command="{Binding DrawRandPixelCmd}" />
+        <KeyBinding Key="Esc" Command="{StaticResource CloseAppCmd}" />
     </Window.InputBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top" VerticalAlignment="Top">
             <MenuItem Header="Exit" Command="{StaticResource CloseAppCmd}"></MenuItem>
             <MenuItem Header="Draw" Command="{Binding DrawPointCmd}"></MenuItem>
+            <MenuItem Header="Rand" Command="{Binding  DrawRandPixelCmd}"></MenuItem>
         </Menu>
         <Image Source="{Binding BitmapSrc}" Width="{Binding ImgWidth}" Height="{Binding ImgHeight}" RenderOptions.BitmapScalingMode="HighQuality"></Image>
     </DockPanel>

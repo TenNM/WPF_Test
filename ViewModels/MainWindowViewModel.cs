@@ -41,12 +41,16 @@ namespace WPF_Test.ViewModels
         private bool Can_DrawPointCmd_Execute(object p) => true;
         private void On_DrawPointCmd_Executed(object p) => BitmapSrc = _noizeImgGenerator.GetNoizeBitmapSource();
 
+        public ICommand DrawRandPixelCmd { get; }
+        private bool DrawRandPixelCmd_CanExec(object p) => true;
+        private void DrawRandPixelCmd_Exec(object p) => BitmapSrc = _noizeImgGenerator.GetBitmapSourceWithNewPixel();
         #endregion
 
         public MainWindowViewModel()
         {
-            DrawPointCmd = new LambdaCommand(On_DrawPointCmd_Executed, Can_DrawPointCmd_Execute);
             _noizeImgGenerator = new NoizeImgGenerator();
+            DrawPointCmd = new LambdaCommand(On_DrawPointCmd_Executed, Can_DrawPointCmd_Execute);
+            DrawRandPixelCmd = new LambdaCommand(DrawRandPixelCmd_Exec, DrawRandPixelCmd_CanExec);
         }
     }
 }
